@@ -846,7 +846,9 @@ if (!function_exists('payment_gateways')) {
     {
         $paymentGatewayPublishedStatus = config('get_payment_publish_status') ?? 0;
 
-        $paymentGatewaysQuery = Setting::whereIn('settings_type', ['payment_config'])->where('is_active', 1);
+        $paymentGatewaysQuery = Setting::whereIn('settings_type', ['payment_config'])
+            ->where('is_active', 1)
+            ->where('key_name', '!=', 'sandbox');
         if ($paymentGatewayPublishedStatus == 1) {
             $paymentGatewaysList = $paymentGatewaysQuery->get();
         } else {

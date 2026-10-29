@@ -12,7 +12,7 @@
             <section class="col-lg-8 px-max-md-0 mt-4">
                 <div class="checkout_details">
                     <div class="px-3 px-md-0">
-                        @include('web-views.partials._checkout-steps', ['step' => 3])
+                        @include('web-views.partials._checkout-steps', ['step' => 2])
                     </div>
                     <div class="card mt-3">
                         <div class="card-body p-0">
@@ -31,7 +31,7 @@
                                     <div class="gap-2 bg-light py-3 px-3">
                                         <div class="d-flex justify-content-between">
                                             <h5 class="mb-0 text-nowrap">{{ translate('payment_method') }}</h5>
-                                            <a href="{{ route('checkout-details') }}"
+                                            <a href="{{ route('shop-cart') }}"
                                                class="d-flex align-items-center gap-2 text-primary font-weight-bold text-nowrap">
                                                 <i class="tio-back-ui fs-12 text-capitalize"></i>
                                                 {{ translate('go_back') }}
@@ -163,6 +163,9 @@
                                         @if ($digital_payment['status'] == 1)
                                             <div class="row gx-4">
                                                 @foreach ($payment_gateways_list as $payment_gateway)
+                                                    @if ($payment_gateway->key_name === 'sandbox')
+                                                        @continue
+                                                    @endif
                                                     @php($additionalData = $payment_gateway['additional_data'] != null ? json_decode($payment_gateway['additional_data']) : [])
                                                         <?php
                                                         $gatewayImgPath = dynamicAsset(path: 'public/assets/back-end/img/modal/payment-methods/' . $payment_gateway->key_name . '.png');
